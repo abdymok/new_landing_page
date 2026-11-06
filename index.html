@@ -83,6 +83,9 @@
     font: 400 19px/1.35 var(--serif);
     color: var(--muted);
   }
+  .statusline { margin: 18px 0 0; max-width: 42ch; font-size: 12px; line-height: 1.55; color: var(--muted); }
+  .statusline a { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  .statusnote { margin: 3px 0 0; max-width: 42ch; font-size: 11px; line-height: 1.45; color: var(--muted); }
 
   nav ul { list-style: none; margin: 0; padding: 0; border-bottom: 1px solid var(--rule); }
   nav li { border-top: 1px solid var(--rule); }
@@ -137,6 +140,8 @@
       <div class="intro">
         <h1>ukraine@war</h1>
         <p class="tagline">Dispatches from Kyiv, and the record behind them.</p>
+        <p class="statusline"><time datetime="2026-11-06">Updated Nov. 6, 2026</time> · <a href="/40/articles/critical-infrastructure-damage.html">254 deaths documented in tracked incidents*</a> · <a href="/40/articles/critical-infrastructure-damage.html">254 Kyiv air alerts · 221h 33m under alert</a></p>
+        <p class="statusnote">*Provisional subtotal for selected incidents, not a complete national count. Figures are current through Nov. 6.</p>
       </div>
 
       <nav aria-label="Sections">
@@ -183,7 +188,7 @@
 
   <footer>
     <span>Kyiv</span>
-    <a href="https://abdymok.substack.com">Substack</a>
+    <a href="https://abdymok.substack.com">Subscribe on Substack</a>
   </footer>
 
 </div>
