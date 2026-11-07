@@ -211,8 +211,8 @@
 
     const duration = alertHours.textContent.match(/(\d+)\s+days?,\s*(\d+)\s+hours?\s+and\s+(\d+)\s+minutes?/i);
     const updatedText = updated.textContent.replace(/\s+/g, " ").trim();
-    const fatalityDate = updatedText.match(/fatality subtotal.*?through\\s+(.+?)\\.\\s+Kyiv air alerts/i);
-    const alertDate = updatedText.match(/under alert through the\\s+(.+?)\\.\\s+The alerts\\.in\\.ua/i);
+    const fatalityDate = updatedText.match(/fatality subtotal.*?through\s+(.+?)\.\s+Kyiv air alerts/i);
+    const alertDate = updatedText.match(/under alert through the\s+(.+?)\.\s+The alerts\.in\.ua/i);
     if (!duration || !fatalityDate || !alertDate) return;
 
     const totalHours = Number(duration[1]) * 24 + Number(duration[2]);
