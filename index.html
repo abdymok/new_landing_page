@@ -281,6 +281,7 @@
     return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "black" : "white";
   };
   const setTheme = choice => {
+    current = choice;
     if (choice === "auto") {
       delete root.dataset.theme;
       try { localStorage.removeItem(key); } catch (_) {}
