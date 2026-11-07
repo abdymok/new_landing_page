@@ -192,5 +192,59 @@
   </footer>
 
 </div>
+
+<script>
+(async function syncChronologyStatus() {
+  const chronologyUrl = "/40/articles/critical-infrastructure-damage.html";
+  try {
+    const response = await fetch(chronologyUrl, { cache: "no-store" });
+    if (!response.ok) return;
+    const html = await response.text();
+    const doc = new DOMParser().parseFromString(html, "text/html");
+
+    const updated = doc.querySelector(".updated-row .updated");
+    const date = updated && updated.querySelector("time");
+    const deaths = doc.querySelector('[data-measure="civilian-deaths"] .dashboard-value');
+    const alerts = doc.querySelector('[data-measure="alerts"] .dashboard-value');
+    const alertHours = doc.querySelector('[data-measure="alert-hours"] .dashboard-detail-collapse > summary');
+    if (!updated || !date || !deaths || !alerts || !alertHours) return;
+
+    const duration = alertHours.textContent.match(/(\d+)\s+days?,\s*(\d+)\s+hours?\s+and\s+(\d+)\s+minutes?/i);
+    const updatedText = updated.textContent.replace(/\s+/g, " ").trim();
+    const fatalityDate = updatedText.match(/fatality subtotal.*?through\s+([^.]*)\./i);
+    const alertDate = updatedText.match(/air alerts total .*?under alert through the\s+([^.]*)\./i);
+    if (!duration || !fatalityDate || !alertDate) return;
+
+    const totalHours = Number(duration[1]) * 24 + Number(duration[2]);
+    const dateLabel = new Intl.DateTimeFormat("en-US", {
+      month: "short", day: "numeric", year: "numeric", timeZone: "UTC"
+    }).format(new Date(date.getAttribute("datetime") + "T12:00:00Z"));
+
+    const status = document.querySelector(".statusline");
+    const note = document.querySelector(".statusnote");
+    if (!status || !note) return;
+
+    const time = document.createElement("time");
+    time.dateTime = date.getAttribute("datetime");
+    time.textContent = "Updated " + dateLabel;
+
+    const deathsLink = document.createElement("a");
+    deathsLink.href = chronologyUrl;
+    deathsLink.textContent = deaths.textContent.trim() + " deaths documented in tracked incidents*";
+
+    const alertsLink = document.createElement("a");
+    alertsLink.href = chronologyUrl;
+    alertsLink.textContent = alerts.textContent.trim() + " Kyiv air alerts · " +
+      totalHours + "h " + duration[3] + "m under alert";
+
+    status.replaceChildren(time, document.createTextNode(" · "), deathsLink,
+      document.createTextNode(" · "), alertsLink);
+    note.textContent = "*Provisional fatality subtotal for selected incidents, not a complete national count. Fatality figures are through " +
+      fatalityDate[1].trim() + ". Kyiv air-alert figures are through the " + alertDate[1].trim() + ".";
+  } catch (_) {
+    // Keep the published fallback figures if the chronology cannot be reached.
+  }
+})();
+</script>
 </body>
 </html>
