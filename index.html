@@ -264,7 +264,7 @@
       })
       .then(markup => {
         const page = new DOMParser().parseFromString(markup, "text/html");
-        const match = page.title.match(/through\\s+(.+)$/i);
+        const match = page.title.match(/through\s+(.+)$/i);
         if (match) chronologyDate.textContent = `Kyiv infrastructure chronology · Updated ${match[1]}`;
       })
       .catch(() => {});
