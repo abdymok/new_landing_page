@@ -12,12 +12,6 @@
 <meta property="og:url" content="https://abdymok.github.io/">
 <meta property="og:site_name" content="ukraine@war">
 <meta property="og:image" content="https://abdymok.github.io/monowheeler.png">
-<meta property="og:image:width" content="1743">
-<meta property="og:image:height" content="902">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="ukraine@war">
-<meta name="twitter:description" content="Reporting, infrastructure records and an archive from Ukraine.">
-<meta name="twitter:image" content="https://abdymok.github.io/monowheeler.png">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#111110" media="(prefers-color-scheme: dark)">
@@ -168,7 +162,7 @@
           <li>
             <a href="/40/articles/critical-infrastructure-damage.html">
               <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true" focusable="false"><path d="M1 29 H47"/><path d="M5 29 Q24 1 43 29"/><path d="M14.5 29 V18.5"/><path d="M33.5 29 V18.5"/><path d="M20.5 33 L27.5 25.5"/></svg>
-              <span><span class="label">Infrastructure</span><span class="desc" data-chronology-date>Kyiv infrastructure chronology · Updated Nov. 12, 2026</span></span>
+              <span><span class="label">Infrastructure</span><span class="desc">Damage to critical infrastructure · Updated Nov. 12, 2026</span></span>
               <span class="arrow" aria-hidden="true">&rarr;</span>
             </a>
           </li>
@@ -187,9 +181,9 @@
             </a>
           </li>
           <li>
-            <a href="/mural/">
+            <a href="/collection/">
               <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true" focusable="false"><defs><clipPath id="fragment"><polygon points="4,3.5 44,4.5 45,44 3,45"/></clipPath></defs><g clip-path="url(#fragment)"><path d="M0 31 C11 7 24 41 49 13" stroke-width="2.8"/><path d="M17 0 C13 15 22 30 14 49" stroke-width="1.7"/><path d="M27 31 L42 35" stroke-width="3.4"/><path d="M30 9 C39 2 44 12 34 17" stroke-width="1.5"/><path d="M6 41 L12 35" stroke-width="1.4"/></g></svg>
-              <span><span class="label">Mural</span><span class="desc">A gallery of ukraine@war posts</span></span>
+              <span><span class="label">Collection</span><span class="desc">Visual projects and experiments</span></span>
               <span class="arrow" aria-hidden="true">&rarr;</span>
             </a>
           </li>
@@ -214,7 +208,7 @@
         <button type="button" data-theme-choice="black" aria-pressed="false">Black</button>
       </div>
     </div>
-    <a href="https://abdymok.substack.com">Subscribe on Substack</a>
+    <a href="https://abdymok.substack.com">Substack</a>
   </footer>
 
 </div>
@@ -253,22 +247,6 @@
   } catch (_) {}
   buttons.forEach(button => button.addEventListener("click", () => setTheme(button.dataset.themeChoice)));
   setTheme(current);
-
-  const chronologyDate = document.querySelector("[data-chronology-date]");
-  if (chronologyDate) {
-    fetch("/40/articles/critical-infrastructure-damage.html", { cache: "no-store" })
-      .then(response => {
-        if (!response.ok) throw new Error("Chronology page unavailable");
-        return response.text();
-      })
-      .then(markup => {
-        const page = new DOMParser().parseFromString(markup, "text/html");
-        const match = page.title.match(/through\s+(.+)$/i);
-        if (match) chronologyDate.textContent = `Kyiv infrastructure chronology · Updated ${match[1]}`;
-      })
-      .catch(() => {});
-  }
-
   if (window.matchMedia) {
     window.matchMedia("(prefers-color-scheme: dark)").addEventListener?.("change", () => {
       if (current === "auto") setTheme("auto");
